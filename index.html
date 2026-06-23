@@ -3,332 +3,261 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StudentLife OS - Ultimate Edition</title>
+  <title>StudentLife OS - Premium Layout</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     .page-section { display: none; }
     .page-section.active { display: block; }
+    .bg-premium { background-color: #4f46e5; }
+    .text-premium { color: #4f46e5; }
+    .border-premium { border-color: #4f46e5; }
+    #balance-pill { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
   </style>
 </head>
-<body id="app-body" class="bg-[#0b0f19] text-slate-300 min-h-screen font-sans antialiased transition-colors duration-200">
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans antialiased">
 
-  <div class="max-w-md mx-auto min-h-screen flex flex-col justify-between p-4 pb-24 relative">
+  <!-- Main Mobile Canvas Container -->
+  <div class="max-w-md mx-auto min-h-screen flex flex-col justify-between bg-[#0f172a] relative pb-20 shadow-2xl border-x border-slate-800">
     
-    <!-- APP HEADER -->
-    <header class="flex justify-between items-center bg-[#111827] p-4 rounded-xl border border-slate-800 mb-4">
-      <div>
-        <h1 class="text-lg font-semibold text-white tracking-tight">Mohshin Adeel</h1>
-        <div class="text-[11px] text-slate-400 mt-0.5">Ecosystem Status: <span class="text-emerald-400 font-medium">100/100 Optimal</span></div>
-      </div>
-      <div class="text-right">
-        <span class="text-[10px] text-slate-500 block">Total Balance</span>
-        <span class="text-sm font-bold text-white">৳ 15,000.00</span>
+    <!-- ========================================== -->
+    <!-- TOP HEADER: bKash Core Architecture        -->
+    <!-- ========================================== -->
+    <header class="bg-[#1e293b] text-white p-4 pt-5 rounded-b-[1.5rem] shadow-lg border-b border-slate-800">
+      <div class="flex justify-between items-center">
+        <!-- User Info & Interactive Balance Pill -->
+        <div class="flex items-center gap-3">
+          <div onclick="navigateTo('profile')" class="w-10 h-10 rounded-full bg-premium flex items-center justify-center font-bold border border-white/20 text-white cursor-pointer">
+            MA
+          </div>
+          <div>
+            <h1 class="text-xs text-slate-400 font-medium">Mohshin Adeel</h1>
+            
+            <!-- Tap to show balance button -->
+            <div onclick="triggerBalanceTap()" id="balance-pill" class="mt-1 bg-slate-950 text-white text-[11px] font-bold pl-2.5 pr-4 py-1 rounded-full flex items-center gap-2 cursor-pointer border border-slate-800 select-none w-36 overflow-hidden whitespace-nowrap">
+              <i class="fa-solid fa-coins text-premium"></i>
+              <span id="balance-label">Tap for Balance</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right Header Utility Icon -->
+        <div class="flex gap-2">
+          <div onclick="alert('Ecosystem Synchronized')" class="w-9 h-9 bg-slate-800 rounded-full flex items-center justify-center cursor-pointer border border-slate-700 text-emerald-400">
+            <i class="fa-solid fa-shield-halved text-sm"></i>
+          </div>
+        </div>
       </div>
     </header>
 
     <!-- ========================================== -->
-    <!-- 1. HOME SCREEN: FINANCIAL DASHBOARD        -->
+    <!-- 1. HOME VIEW: Core 4x2 Grid Engine         -->
     <!-- ========================================== -->
-    <div id="home-page" class="page-section active space-y-4">
+    <div id="home-page" class="page-section active p-4 flex-1 space-y-4 overflow-y-auto">
       
-      <!-- EXPENSE VS INCOME SWITCHER (Inspired by Image 1000060390.jpg) -->
-      <div class="grid grid-cols-3 gap-2 bg-[#111827] p-1 rounded-xl border border-slate-800 text-xs font-medium">
-        <button onclick="setTransactionType('Expend')" id="btn-type-expend" class="py-2.5 text-center rounded-lg bg-indigo-600 text-white transition">Expend</button>
-        <button onclick="setTransactionType('Income')" id="btn-type-income" class="py-2.5 text-center rounded-lg text-slate-400 hover:text-slate-200 transition">Income</button>
-        <button onclick="setTransactionType('Loan')" id="btn-type-loan" class="py-2.5 text-center rounded-lg text-slate-400 hover:text-slate-200 transition">Loan</button>
+      <!-- MAIN GRID (4 Columns - 2 Rows Layout cloned from bKash) -->
+      <div class="bg-[#1e293b] rounded-2xl p-4 shadow-xl border border-slate-800 grid grid-cols-4 gap-y-5 gap-x-1 text-center text-[11px] font-medium text-slate-300">
+        
+        <!-- Grid Item 1 -->
+        <div onclick="openCustomPrompt('Bazar/Shopping')" class="flex flex-col items-center cursor-pointer group">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-premium text-lg mb-1.5 group-hover:bg-premium group-hover:text-white transition-all"><i class="fa-solid fa-cart-shopping"></i></div>
+          <span>Bazar</span>
+        </div>
+        <!-- Grid Item 2 -->
+        <div onclick="openCustomPrompt('Daily Commute/Travel')" class="flex flex-col items-center cursor-pointer group">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-premium text-lg mb-1.5 group-hover:bg-premium group-hover:text-white transition-all"><i class="fa-solid fa-bus"></i></div>
+          <span>Travel</span>
+        </div>
+        <!-- Grid Item 3 -->
+        <div onclick="openCustomPrompt('Mess/Meal Expense')" class="flex flex-col items-center cursor-pointer group">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-premium text-lg mb-1.5 group-hover:bg-premium group-hover:text-white transition-all"><i class="fa-solid fa-bowl-food"></i></div>
+          <span>Meals</span>
+        </div>
+        <!-- Grid Item 4 -->
+        <div onclick="openCustomPrompt('Academic Fees')" class="flex flex-col items-center cursor-pointer group">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-premium text-lg mb-1.5 group-hover:bg-premium group-hover:text-white transition-all"><i class="fa-solid fa-graduation-cap"></i></div>
+          <span>Studies</span>
+        </div>
+
+        <!-- Grid Item 5 -->
+        <div onclick="openCustomPrompt('Borrow Money')" class="flex flex-col items-center cursor-pointer group">
+          <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 text-lg mb-1.5 group-hover:bg-rose-500 group-hover:text-white transition-all"><i class="fa-solid fa-arrow-down-left"></i></div>
+          <span>Borrow</span>
+        </div>
+        <!-- Grid Item 6 -->
+        <div onclick="openCustomPrompt('Lend Money')" class="flex flex-col items-center cursor-pointer group">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-lg mb-1.5 group-hover:bg-emerald-500 group-hover:text-white transition-all"><i class="fa-solid fa-arrow-up-right"></i></div>
+          <span>Lend</span>
+        </div>
+        <!-- Grid Item 7 -->
+        <div onclick="openCustomPrompt('Credit/Due Log')" class="flex flex-col items-center cursor-pointer group">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-lg mb-1.5 group-hover:bg-amber-500 group-hover:text-white transition-all"><i class="fa-solid fa-receipt"></i></div>
+          <span>Due/Baki</span>
+        </div>
+        <!-- Grid Item 8 -->
+        <div onclick="openCustomPrompt('Gift Received')" class="flex flex-col items-center cursor-pointer group">
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-lg mb-1.5 group-hover:bg-purple-500 group-hover:text-white transition-all"><i class="fa-solid fa-gift"></i></div>
+          <span>Gifts</span>
+        </div>
+
       </div>
 
-      <!-- PERSONALIZED SPENDING JARS / METRICS (Inspired by Image 1000060391.jpg) -->
-      <div class="grid grid-cols-2 gap-3">
-        <div class="bg-[#111827] p-3 rounded-xl border border-slate-800 flex flex-col justify-between">
-          <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Food & Grocery</span>
-          <div class="flex justify-between items-baseline mt-2">
-            <span class="text-sm font-bold text-white" id="jar-food">৳0</span>
-            <span class="text-[10px] text-slate-500">Allocated</span>
-          </div>
-          <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden"><div class="bg-amber-500 h-full w-[35%]"></div></div>
-        </div>
-        <div class="bg-[#111827] p-3 rounded-xl border border-slate-800 flex flex-col justify-between">
-          <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Travel & Commute</span>
-          <div class="flex justify-between items-baseline mt-2">
-            <span class="text-sm font-bold text-white" id="jar-travel">৳0</span>
-            <span class="text-[10px] text-slate-500">Allocated</span>
-          </div>
-          <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden"><div class="bg-indigo-500 h-full w-[50%]"></div></div>
-        </div>
-      </div>
-
-      <!-- MASTER CATEGORY MATRIX GRID (Inspired by Image 1000060387.jpg & 1000060394.jpg) -->
-      <section class="bg-[#111827] p-4 rounded-xl border border-slate-800 space-y-3">
-        <p class="text-[11px] font-bold uppercase tracking-widest text-slate-400">Select Category to Log:</p>
-        <div class="grid grid-cols-4 gap-3 text-center text-[11px]">
-          
-          <!-- Category Row 1 -->
-          <div onclick="openCalculator('Food')" class="flex flex-col items-center cursor-pointer group">
-            <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-200 group-hover:bg-indigo-600/30 transition"><i class="fa-solid fa-bowl-food"></i></div>
-            <span class="text-slate-400 mt-1 block">Food</span>
-          </div>
-          <div onclick="openCalculator('Shopping')" class="flex flex-col items-center cursor-pointer group">
-            <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-200 group-hover:bg-indigo-600/30 transition"><i class="fa-solid fa-bag-shopping"></i></div>
-            <span class="text-slate-400 mt-1 block">Shopping</span>
-          </div>
-          <div onclick="openCalculator('Travel')" class="flex flex-col items-center cursor-pointer group">
-            <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-200 group-hover:bg-indigo-600/30 transition"><i class="fa-solid fa-bus"></i></div>
-            <span class="text-slate-400 mt-1 block">Travel</span>
-          </div>
-          <div onclick="openCalculator('Education')" class="flex flex-col items-center cursor-pointer group">
-            <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-200 group-hover:bg-indigo-600/30 transition"><i class="fa-solid fa-book-open"></i></div>
-            <span class="text-slate-400 mt-1 block">Education</span>
-          </div>
-
-          <!-- Category Row 2 -->
-          <div onclick="openCalculator('Borrow')" class="flex flex-col items-center cursor-pointer group">
-            <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-rose-400 group-hover:bg-indigo-600/30 transition"><i class="fa-solid fa-arrow-down-left"></i></div>
-            <span class="text-slate-400 mt-1 block">Borrow</span>
-          </div>
-          <div onclick="openCalculator('Lend')" class="flex flex-col items-center cursor-pointer group">
-            <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-emerald-400 group-hover:bg-indigo-600/30 transition"><i class="fa-solid fa-arrow-up-right"></i></div>
-            <span class="text-slate-400 mt-1 block">Lend</span>
-          </div>
-          <div onclick="openCalculator('Gifts')" class="flex flex-col items-center cursor-pointer group">
-            <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-pink-400 group-hover:bg-indigo-600/30 transition"><i class="fa-solid fa-gift"></i></div>
-            <span class="text-slate-400 mt-1 block">Gifts</span>
-          </div>
-          <div onclick="openCalculator('Cigarette')" class="flex flex-col items-center cursor-pointer group">
-            <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-amber-500 group-hover:bg-indigo-600/30 transition"><i class="fa-solid fa-smoking"></i></div>
-            <span class="text-slate-400 mt-1 block">Cigarette</span>
-          </div>
-
-          <!-- Category Row 3 -->
-          <div onclick="openCalculator('Medical')" class="flex flex-col items-center cursor-pointer group">
-            <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-red-400 group-hover:bg-indigo-600/30 transition"><i class="fa-solid fa-heart-pulse"></i></div>
-            <span class="text-slate-400 mt-1 block">Medical</span>
-          </div>
-          <div onclick="openCalculator('Bazar')" class="flex flex-col items-center cursor-pointer group">
-            <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-200 group-hover:bg-indigo-600/30 transition"><i class="fa-solid fa-basket-shopping"></i></div>
-            <span class="text-slate-400 mt-1 block">Bazar</span>
-          </div>
-          <div onclick="openCalculator('Bills')" class="flex flex-col items-center cursor-pointer group">
-            <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-orange-400 group-hover:bg-indigo-600/30 transition"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-            <span class="text-slate-400 mt-1 block">Bills</span>
-          </div>
-          <div onclick="openCalculator('Other')" class="flex flex-col items-center cursor-pointer group">
-            <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400 group-hover:bg-indigo-600/30 transition"><i class="fa-solid fa-ellipsis"></i></div>
-            <span class="text-slate-400 mt-1 block">Other</span>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- AGENTS & SAVED CONTACTS -->
-      <div class="bg-[#111827] rounded-xl p-4 border border-slate-800 space-y-3">
+      <!-- INSIGHT PROMOTIONAL BANNER -->
+      <div class="bg-[#1e293b] rounded-2xl p-4 shadow-xl border border-slate-800 relative overflow-hidden">
+        <div class="absolute -right-8 -top-8 w-24 h-24 bg-premium/10 rounded-full blur-xl"></div>
         <div class="flex justify-between items-center">
-          <p class="text-xs font-semibold text-slate-400">Contacts Ledger:</p>
-          <button onclick="addCustomContact()" class="text-[10px] bg-slate-800 border border-slate-700 px-2 py-0.5 rounded text-indigo-400">+ Add</button>
-        </div>
-        <div id="contacts-shelf" class="flex gap-4 overflow-x-auto text-[10px] text-slate-300 text-center">
-          <div><div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center font-bold mx-auto border border-slate-700">A</div><span class="block mt-1">Alvi</span></div>
-          <div><div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center font-bold mx-auto border border-slate-700">R</div><span class="block mt-1">Rohan</span></div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ========================================== -->
-    <!-- 2. INBOX SCREEN (Statements Ledger)        -->
-    <!-- ========================================== -->
-    <div id="inbox-page" class="page-section space-y-4">
-      <h2 class="text-base font-medium text-white px-1">Statement Logs Ledger</h2>
-      <div id="inbox-history-content" class="space-y-2 max-h-[420px] overflow-y-auto pr-1">
-        <!-- Logs populate here -->
-      </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- 3. SETTINGS & PROFILE PAGE (With KYC Info) -->
-    <!-- ========================================== -->
-    <div id="profile-page" class="page-section space-y-4">
-      <div class="bg-[#111827] p-4 rounded-xl border border-slate-800 space-y-3">
-        <h3 class="text-xs font-semibold text-indigo-400 uppercase tracking-wider">KYC Profile Control</h3>
-        <div class="space-y-2 text-xs">
-          <div class="grid grid-cols-2 gap-2">
-            <input type="number" id="kyc-birth" placeholder="Birth Year (e.g. 2005)" class="bg-slate-800 border border-slate-700 rounded-lg p-2 text-white focus:outline-none">
-            <input type="text" id="kyc-phone" value="+8801947523785" class="bg-slate-800 border border-slate-700 rounded-lg p-2 text-white focus:outline-none">
+          <div>
+            <span class="text-[10px] bg-premium text-white px-2 py-0.5 rounded font-bold uppercase tracking-wider">Ecosystem Insight</span>
+            <h3 class="text-xs font-bold text-white mt-1.5">Monthly Expenses Summary</h3>
+            <p class="text-[11px] text-slate-400 mt-0.5">All data logs are backed up to local ledger storage.</p>
           </div>
-          <input type="text" id="kyc-inst" value="BSPI • Computer Science & Technology" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white focus:outline-none">
-          <button onclick="alert('Profile Saved Locally!')" class="w-full bg-indigo-600 text-white py-2 rounded-lg font-medium">Save Sync Data</button>
+          <div class="text-premium text-2xl pr-2"><i class="fa-solid fa-chart-line text-slate-500"></i></div>
         </div>
       </div>
 
-      <!-- Advanced Theme Panel -->
-      <div class="bg-[#111827] p-4 rounded-xl border border-slate-800 space-y-2 text-xs">
-        <h3 class="text-xs font-semibold text-indigo-400 uppercase tracking-wider">Ecosystem Theme</h3>
-        <div class="grid grid-cols-3 gap-2">
-          <button onclick="setGlobalTheme('dark')" class="bg-slate-800 py-2 rounded-lg border border-slate-700">Dark</button>
-          <button onclick="setGlobalTheme('slate')" class="bg-slate-700 py-2 rounded-lg border border-slate-600">Slate</button>
-          <button onclick="setGlobalTheme('light')" class="bg-slate-200 py-2 rounded-lg border border-slate-300 text-slate-900 font-bold">Light</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 2. INBOX VIEW: Transaction Statements      -->
+    <!-- ========================================== -->
+    <div id="inbox-page" class="page-section p-4 flex-1 space-y-3 overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <h2 class="text-sm font-bold text-white">Inbox & Statements</h2>
+        <span class="text-[10px] text-slate-500 font-mono" id="statement-counter">0 Records</span>
+      </div>
+      <div id="statement-ledger" class="space-y-2">
+        <!-- Logs appear here dynamically matching layout -->
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 3. PROFILE SETTINGS VIEW                   -->
+    <!-- ========================================== -->
+    <div id="profile-page" class="page-section p-4 flex-1 space-y-4 overflow-y-auto">
+      <div class="bg-[#1e293b] rounded-2xl p-4 shadow-xl border border-slate-800 space-y-3 text-xs">
+        <h3 class="font-bold text-premium uppercase tracking-wider">KYC Profile Configuration</h3>
+        <div class="space-y-2">
+          <label class="block text-[10px] text-slate-500 uppercase">Institution / College Name</label>
+          <input type="text" id="kyc-inst" value="BSPI • Computer Science & Technology" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-white focus:outline-none focus:border-premium">
+          <label class="block text-[10px] text-slate-500 uppercase">Contact Phone Number</label>
+          <input type="text" id="kyc-phone" value="+8801947523785" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-white focus:outline-none focus:border-premium">
+          <button onclick="alert('Ecosystem KYC Saved')" class="w-full bg-premium text-white py-2.5 rounded-lg font-bold shadow-md shadow-indigo-600/20">Save Records</button>
         </div>
       </div>
 
       <!-- Security Controls -->
-      <div class="bg-[#111827] p-4 rounded-xl border border-slate-800 space-y-2 text-xs">
-        <h3 class="text-xs font-semibold text-indigo-400 uppercase tracking-wider">Privacy & Locks</h3>
-        <div class="flex justify-between items-center"><span>PIN Startup Lock</span><input type="checkbox" checked class="w-4 h-4 accent-indigo-600"></div>
-        <div class="flex justify-between items-center"><span>Biometric Fingerprint / Face ID</span><input type="checkbox" class="w-4 h-4 accent-indigo-600"></div>
+      <div class="bg-[#1e293b] rounded-2xl p-4 shadow-xl border border-slate-800 text-xs space-y-3">
+        <h3 class="font-bold text-slate-400 uppercase tracking-wider text-[10px]">App Access Security</h3>
+        <div class="flex justify-between items-center"><span>Startup PIN Lock</span><input type="checkbox" checked class="accent-premium w-4 h-4"></div>
+        <div class="flex justify-between items-center"><span>Biometric Fingerprint / Face ID</span><input type="checkbox" class="accent-premium w-4 h-4"></div>
       </div>
 
-      <!-- Dev Credits -->
-      <div class="bg-indigo-950/20 rounded-xl p-4 border border-indigo-500/20 text-center text-xs space-y-2">
-        <p class="text-slate-400">Maintained & Developed By Mohshin Adeel</p>
-        <div class="grid grid-cols-2 gap-2 font-semibold">
-          <a href="https://wa.me/8801947523785" target="_blank" class="bg-emerald-600/10 border border-emerald-500/20 text-emerald-400 py-2 rounded-lg"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-          <a href="https://instagram.com/_ur_adeel" target="_blank" class="bg-pink-600/10 border border-pink-500/20 text-pink-400 py-2 rounded-lg"><i class="fa-brands fa-instagram"></i> Instagram</a>
-        </div>
+      <!-- Footer Branding Info -->
+      <div class="text-center text-[10px] text-slate-600 pt-4">
+        Ecosystem Designed & Cloned by Mohshin Adeel • Vers 2.5.0
       </div>
     </div>
 
     <!-- ========================================== -->
-    <!-- BUILT-IN CRUNCH CALCULATOR (Image 1000060388.jpg) -->
+    <!-- GLOBAL BOTTOM NAVIGATION ENGINE             -->
     <!-- ========================================== -->
-    <div id="calc-panel" class="hidden fixed bottom-20 left-4 right-4 max-w-md mx-auto bg-[#111827] border border-slate-800 rounded-2xl p-4 shadow-2xl space-y-3 z-50">
-      <div class="flex justify-between items-center">
-        <span id="calc-cat-title" class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Log Amount</span>
-        <button onclick="closeCalculator()" class="text-slate-500 hover:text-slate-300"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <!-- Display screen -->
-      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-right">
-        <div id="calc-expression" class="text-[11px] text-slate-500 min-h-[16px]"></div>
-        <div id="calc-screen" class="text-lg font-mono font-bold text-white mt-1">0</div>
-      </div>
-      <!-- Calc Grid Layout -->
-      <div class="grid grid-cols-4 gap-2 font-mono text-sm font-bold text-center">
-        <div onclick="pressCalc('7')" class="bg-slate-800 p-2.5 rounded-lg cursor-pointer hover:bg-slate-700">7</div>
-        <div onclick="pressCalc('8')" class="bg-slate-800 p-2.5 rounded-lg cursor-pointer hover:bg-slate-700">8</div>
-        <div onclick="pressCalc('9')" class="bg-slate-800 p-2.5 rounded-lg cursor-pointer hover:bg-slate-700">9</div>
-        <div onclick="pressCalc('+')" class="bg-slate-800/80 p-2.5 rounded-lg text-indigo-400 cursor-pointer hover:bg-slate-700">+</div>
-        
-        <div onclick="pressCalc('4')" class="bg-slate-800 p-2.5 rounded-lg cursor-pointer hover:bg-slate-700">4</div>
-        <div onclick="pressCalc('5')" class="bg-slate-800 p-2.5 rounded-lg cursor-pointer hover:bg-slate-700">5</div>
-        <div onclick="pressCalc('6')" class="bg-slate-800 p-2.5 rounded-lg cursor-pointer hover:bg-slate-700">6</div>
-        <div onclick="pressCalc('-')" class="bg-slate-800/80 p-2.5 rounded-lg text-indigo-400 cursor-pointer hover:bg-slate-700">-</div>
-        
-        <div onclick="pressCalc('1')" class="bg-slate-800 p-2.5 rounded-lg cursor-pointer hover:bg-slate-700">1</div>
-        <div onclick="pressCalc('2')" class="bg-slate-800 p-2.5 rounded-lg cursor-pointer hover:bg-slate-700">2</div>
-        <div onclick="pressCalc('3')" class="bg-slate-800 p-2.5 rounded-lg cursor-pointer hover:bg-slate-700">3</div>
-        <div onclick="pressCalc('C')" class="bg-rose-950/40 text-rose-400 p-2.5 rounded-lg cursor-pointer hover:bg-rose-900/30">C</div>
-        
-        <div onclick="pressCalc('.')" class="bg-slate-800 p-2.5 rounded-lg cursor-pointer hover:bg-slate-700">.</div>
-        <div onclick="pressCalc('0')" class="bg-slate-800 p-2.5 rounded-lg cursor-pointer hover:bg-slate-700">0</div>
-        <div onclick="pressCalc('=')" class="col-span-2 bg-indigo-600 text-white p-2.5 rounded-lg cursor-pointer hover:bg-indigo-700 text-center">= Save</div>
-      </div>
-    </div>
-
-    <!-- GLOBAL BOTTOM NAVIGATION -->
-    <nav class="fixed bottom-4 left-4 right-4 max-w-md mx-auto bg-[#111827] rounded-xl p-3 flex justify-around items-center border border-slate-800 z-40 shadow-xl">
-      <button onclick="navigateTo('home')" id="nav-home" class="text-indigo-400 flex flex-col items-center gap-1 text-xs w-12"><i class="fa-solid fa-house"></i>Home</button>
-      <button onclick="navigateTo('inbox')" id="nav-inbox" class="text-slate-500 flex flex-col items-center gap-1 text-xs w-12"><i class="fa-solid fa-inbox"></i>Inbox</button>
-      <button onclick="alert('Camera Scan View Active')" class="bg-indigo-600 text-white w-10 h-10 rounded-full flex items-center justify-center -mt-5 border-4 border-[#0b0f19] shadow-lg"><i class="fa-solid fa-camera"></i></button>
-      <button onclick="navigateTo('profile')" id="nav-profile" class="text-slate-500 flex flex-col items-center gap-1 text-xs w-12"><i class="fa-solid fa-user-gear"></i>Settings</button>
+    <nav class="absolute bottom-0 left-0 right-0 bg-[#1e293b] border-t border-slate-800 p-2 flex justify-around items-center text-[10px] font-bold text-slate-400 z-50 rounded-t-xl">
+      <button onclick="navigateTo('home')" id="nav-home" class="text-premium flex flex-col items-center gap-0.5 w-14 transition-colors"><i class="fa-solid fa-house text-base"></i>Home</button>
+      <button onclick="alert('My Account Panel Active')" class="flex flex-col items-center gap-0.5 w-14 hover:text-slate-200"><i class="fa-solid fa-wallet text-base"></i>My Student</button>
+      
+      <!-- Central Floating Action (bKash Scan QR Style Position) -->
+      <button onclick="alert('QR Scanner Camera Module Active')" class="bg-[#0f172a] border-4 border-[#1e293b] text-premium w-12 h-12 rounded-full flex items-center justify-center -mt-6 shadow-xl text-base hover:scale-105 transition-all"><i class="fa-solid fa-qrcode"></i></button>
+      
+      <button onclick="navigateTo('inbox')" id="nav-inbox" class="flex flex-col items-center gap-0.5 w-14 hover:text-slate-200"><i class="fa-solid fa-inbox text-base"></i>Inbox</button>
+      <button onclick="navigateTo('profile')" id="nav-profile" class="flex flex-col items-center gap-0.5 w-14 hover:text-slate-200"><i class="fa-solid fa-user-gear text-base"></i>Settings</button>
     </nav>
 
   </div>
 
+  <!-- APPLICATION CONTROLLER CORE LOGIC -->
   <script>
-    let activeType = 'Expend';
-    let currentCategory = '';
-    let calcValue = '0';
-    let logs = JSON.parse(localStorage.getItem('student_logs')) || [];
+    let balanceState = false;
+    let storedBalance = 15420.50;
+    let records = JSON.parse(localStorage.getItem('premium_student_records')) || [];
 
-    document.addEventListener("DOMContentLoaded", () => { renderLogs(); });
+    document.addEventListener("DOMContentLoaded", () => { refreshLedgerDisplay(); });
 
-    function setTransactionType(type) {
-      activeType = type;
-      ['expend', 'income', 'loan'].forEach(t => {
-        const btn = document.getElementById(`btn-type-${t}`);
-        if(t === type.toLowerCase()) {
-          btn.className = "py-2.5 text-center rounded-lg bg-indigo-600 text-white transition";
-        } else {
-          btn.className = "py-2.5 text-center rounded-lg text-slate-400 hover:text-slate-200 transition";
-        }
-      });
+    // Interactive Balance Display Tap Handler
+    function triggerBalanceTap() {
+      if (balanceState) return;
+      balanceState = true;
+      const label = document.getElementById('balance-label');
+      
+      label.innerHTML = `৳ ${storedBalance.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+      
+      setTimeout(() => {
+        label.innerHTML = 'Tap for Balance';
+        balanceState = false;
+      }, 4000);
     }
 
+    // View Routing Engine
     function navigateTo(pageId) {
       document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
       document.getElementById(`${pageId}-page`).classList.add('active');
+      
       ['home', 'inbox', 'profile'].forEach(id => {
         const btn = document.getElementById(`nav-${id}`);
-        if(btn) btn.className = id === pageId ? "text-indigo-400 flex flex-col items-center gap-1 text-xs w-12" : "text-slate-500 flex flex-col items-center gap-1 text-xs w-12";
-      });
-    }
-
-    function openCalculator(category) {
-      currentCategory = category;
-      document.getElementById('calc-cat-title').innerText = `${activeType} : ${category}`;
-      calcValue = '0';
-      document.getElementById('calc-screen').innerText = '0';
-      document.getElementById('calc-expression').innerText = '';
-      document.getElementById('calc-panel').classList.remove('hidden');
-    }
-
-    function closeCalculator() { document.getElementById('calc-panel').classList.add('hidden'); }
-
-    function pressCalc(val) {
-      const screen = document.getElementById('calc-screen');
-      const expr = document.getElementById('calc-expression');
-      
-      if(val === 'C') {
-        calcValue = '0';
-        expr.innerText = '';
-        screen.innerText = '0';
-      } else if(val === '=') {
-        try {
-          let result = eval(calcValue);
-          if(result > 0) {
-            logs.unshift({ title: `${activeType} (${currentCategory})`, amount: result, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) });
-            localStorage.setItem('student_logs', JSON.stringify(logs));
-            renderLogs();
-            alert(`Saved: ${activeType} ${currentCategory} - ৳${result}`);
+        if(btn) {
+          if (id === pageId) {
+            btn.className = "text-premium flex flex-col items-center gap-0.5 w-14 transition-colors";
+          } else {
+            btn.className = "text-slate-400 flex flex-col items-center gap-0.5 w-14 hover:text-slate-200 transition-colors";
           }
-          closeCalculator();
-        } catch(e) {
-          screen.innerText = 'Error';
         }
-      } else {
-        if(calcValue === '0' && !['+','-'].includes(val)) { calcValue = val; }
-        else { calcValue += val; }
-        screen.innerText = calcValue;
-      }
-    }
-
-    function renderLogs() {
-      const container = document.getElementById('inbox-history-content');
-      if(!container) return;
-      container.innerHTML = logs.length ? '' : '<div class="text-center text-slate-500 py-6 text-xs">No statement ledger found.</div>';
-      let foodTotal = 0, travelTotal = 0;
-      
-      logs.forEach(log => {
-        if(log.title.includes('Food') || log.title.includes('Bazar')) foodTotal += log.amount;
-        if(log.title.includes('Travel')) travelTotal += log.amount;
-        container.innerHTML += `<div class="bg-[#111827] p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs"><div><span class="font-medium text-slate-200 block">${log.title}</span><span class="text-slate-500">${log.time}</span></div><span class="text-rose-400 font-semibold">- ৳${log.amount.toFixed(2)}</span></div>`;
       });
-      
-      document.getElementById('jar-food').innerText = `৳${foodTotal}`;
-      document.getElementById('jar-travel').innerText = `৳${travelTotal}`;
     }
 
-    function addCustomContact() {
-      const name = prompt("Enter contact name:");
-      if(name) {
-        document.getElementById('contacts-shelf').innerHTML += `<div><div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center font-bold mx-auto border border-slate-700">${name.charAt(0).toUpperCase()}</div><span class="block mt-1">${name}</span></div>`;
+    // Transaction Logger Prompt Window
+    function openCustomPrompt(moduleTitle) {
+      const amountInput = prompt(`Enter amount for (${moduleTitle}) in ৳:`);
+      if (amountInput && !isNaN(amountInput) && parseFloat(amountInput) > 0) {
+        const parsedAmount = parseFloat(amountInput);
+        
+        if(moduleTitle.includes('Borrow') || moduleTitle.includes('Gift')) {
+          storedBalance += parsedAmount;
+        } else {
+          storedBalance -= parsedAmount;
+        }
+
+        records.unshift({
+          moduleTitle,
+          amount: parsedAmount,
+          stamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+        });
+        
+        localStorage.setItem('premium_student_records', JSON.stringify(records));
+        refreshLedgerDisplay();
       }
     }
 
-    function setGlobalTheme(theme) {
-      const body = document.getElementById('app-body');
-      localStorage.setItem('app_theme', theme);
-      body.className = theme === 'light' ? "bg-slate-50 text-slate-800 min-h-screen font-sans antialiased" : (theme === 'slate' ? "bg-slate-900 text-slate-100 min-h-screen font-sans antialiased" : "bg-[#0b0f19] text-slate-300 min-h-screen font-sans antialiased");
+    // Refresh View Database Renderer
+    function refreshLedgerDisplay() {
+      const container = document.getElementById('statement-ledger');
+      const counter = document.getElementById('statement-counter');
+      if(!container) return;
+      
+      counter.innerText = `${records.length} Records`;
+      container.innerHTML = records.length ? '' : '<div class="text-center text-slate-600 py-12 text-xs">No statement ledger logs found.</div>';
+      
+      records.forEach(item => {
+        const isAddition = item.moduleTitle.includes('Borrow') || item.moduleTitle.includes('Gift');
+        container.innerHTML += `
+          <div class="bg-[#1e293b] p-3.5 rounded-xl border border-slate-800 shadow-sm flex justify-between items-center text-xs">
+            <div>
+              <span class="font-bold text-white block">${item.moduleTitle}</span>
+              <span class="text-slate-500 font-mono text-[10px]">${item.stamp}</span>
+            </div>
+            <span class="${isAddition ? 'text-emerald-400' : 'text-rose-400'} font-mono font-bold">
+              ${isAddition ? '+' : '-'} ৳${item.amount.toFixed(2)}
+            </span>
+          </div>`;
+      });
     }
   </script>
 </body>
