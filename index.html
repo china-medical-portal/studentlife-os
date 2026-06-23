@@ -3,110 +3,464 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StudentLife OS</title>
+  <title>StudentLife OS - Complete Edition</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { background-color: #0b0f19; }
     .page-section { display: none; }
     .page-section.active { display: block; }
   </style>
 </head>
-<body class="text-slate-300 min-h-screen font-sans antialiased selection:bg-indigo-500 selection:text-white">
+<body id="app-body" class="bg-[#0b0f19] text-slate-300 min-h-screen font-sans antialiased transition-colors duration-200">
 
-  <!-- Main Mobile Responsive Container -->
-  <div class="max-w-md mx-auto min-h-screen flex flex-col justify-between p-5 pb-24 relative">
+  <!-- Main Mobile Container -->
+  <div class="max-w-md mx-auto min-h-screen flex flex-col justify-between p-4 pb-24 relative">
     
-    <!-- =================================================== -->
-    <!-- 1. HOME SCREEN SECTION                              -->
-    <!-- =================================================== -->
-    <div id="home-page" class="page-section active space-y-5">
-      <!-- Clean Header -->
-      <header class="flex justify-between items-center bg-[#111827] p-4 rounded-xl border border-slate-800">
-        <div>
-          <h1 class="text-xl font-semibold text-white tracking-tight">Mohshin Adeel</h1>
-          <button onclick="toggleBalance()" class="mt-1 bg-slate-800 text-slate-400 text-[11px] px-3 py-0.5 rounded-lg border border-slate-700/50 transition flex items-center gap-1">
-            <i class="fa-solid fa-eye text-[10px]"></i> <span id="balance-text">Show Budget</span>
-          </button>
-        </div>
-        <div class="relative">
-          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" alt="Profile" class="w-11 h-11 rounded-full border border-slate-700 object-cover">
-          <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#111827]"></span>
-        </div>
-      </header>
+    <!-- ========================================== -->
+    <!-- 0. AUTHENTICATION PAGE (Login/Signup)      -->
+    <!-- ========================================== -->
+    <div id="auth-page" class="page-section active space-y-6 pt-6">
+      <div class="text-center space-y-2">
+        <h1 class="text-2xl font-bold text-white tracking-tight">StudentLife OS</h1>
+        <p class="text-xs text-slate-400">The Ultimate Campus Lifestyle Ecosystem</p>
+      </div>
 
-      <!-- Grid Services Icons (Unique Student Dashboard) -->
-      <section class="grid grid-cols-4 gap-4 bg-[#111827] p-5 rounded-xl border border-slate-800 text-center">
-        <div onclick="openFeature('Expenses')" class="flex flex-col items-center cursor-pointer group">
-          <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-200 group-hover:bg-indigo-600/20 transition"><i class="fa-solid fa-wallet text-lg"></i></div>
-          <span class="text-xs text-slate-400 mt-2">Expenses</span>
+      <!-- Social Login -->
+      <div class="space-y-2">
+        <button onclick="mockLogin('Google Account')" class="w-full bg-slate-800 hover:bg-slate-700/80 text-white py-2.5 rounded-xl border border-slate-700 text-xs font-semibold flex items-center justify-center gap-2 transition">
+          <i class="fa-brands fa-google text-rose-400"></i> Continue with Google
+        </button>
+        <button onclick="mockLogin('Facebook Account')" class="w-full bg-slate-800 hover:bg-slate-700/80 text-white py-2.5 rounded-xl border border-slate-700 text-xs font-semibold flex items-center justify-center gap-2 transition">
+          <i class="fa-brands fa-facebook text-blue-500"></i> Continue with Facebook
+        </button>
+      </div>
+
+      <div class="flex items-center my-4 text-xs text-slate-500">
+        <div class="flex-1 h-px bg-slate-800"></div>
+        <span class="px-3">OR MANUALLY</span>
+        <div class="flex-1 h-px bg-slate-800"></div>
+      </div>
+
+      <!-- Manual Registration/Login Form -->
+      <form onsubmit="handleAuth(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="text-slate-400 block mb-1">Full Name</label>
+          <input type="text" id="auth-name" placeholder="Mohshin Adeel" class="w-full bg-[#111827] border border-slate-800 rounded-lg p-2.5 text-white focus:outline-none focus:border-indigo-500">
         </div>
-        <div onclick="openFeature('Travel')" class="flex flex-col items-center cursor-pointer group">
-          <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-200 group-hover:bg-indigo-600/20 transition"><i class="fa-solid fa-bus text-lg"></i></div>
-          <span class="text-xs text-slate-400 mt-2">Travel</span>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="text-slate-400 block mb-1">Age</label>
+            <input type="number" id="auth-age" placeholder="20" class="w-full bg-[#111827] border border-slate-800 rounded-lg p-2.5 text-white focus:outline-none focus:border-indigo-500">
+          </div>
+          <div>
+            <label class="text-slate-400 block mb-1">Gender</label>
+            <select id="auth-gender" class="w-full bg-[#111827] border border-slate-800 rounded-lg p-2.5 text-white focus:outline-none focus:border-indigo-500">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
         </div>
-        <div onclick="openFeature('Studies')" class="flex flex-col items-center cursor-pointer group">
-          <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-200 group-hover:bg-indigo-600/20 transition"><i class="fa-solid fa-book-open text-lg"></i></div>
-          <span class="text-xs text-slate-400 mt-2">Studies</span>
+        <div>
+          <label class="text-slate-400 block mb-1">Email Address</label>
+          <input type="email" id="auth-email" required placeholder="adeel@example.com" class="w-full bg-[#111827] border border-slate-800 rounded-lg p-2.5 text-white focus:outline-none focus:border-indigo-500">
         </div>
-        <div onclick="openFeature('Hustle')" class="flex flex-col items-center cursor-pointer group">
-          <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-200 group-hover:bg-indigo-600/20 transition"><i class="fa-solid fa-briefcase text-lg"></i></div>
-          <span class="text-xs text-slate-400 mt-2">Hustle</span>
+        <div>
+          <label class="text-slate-400 block mb-1">Password</label>
+          <input type="password" id="auth-pass" required placeholder="••••••••" class="w-full bg-[#111827] border border-slate-800 rounded-lg p-2.5 text-white focus:outline-none focus:border-indigo-500">
+        </div>
+        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-medium transition mt-2 text-xs">Sign Up & Initialize Account</button>
+      </form>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MAIN APP HEADER (Hidden during Auth)       -->
+    <!-- ========================================== -->
+    <header id="app-header" class="hidden flex justify-between items-center mb-4 bg-[#111827] p-4 rounded-xl border border-slate-800">
+      <div>
+        <h1 id="header-user-name" class="text-lg font-semibold text-white tracking-tight">Mohshin Adeel</h1>
+        <button onclick="toggleBalance()" class="mt-1 bg-slate-800 text-slate-400 text-[10px] px-2.5 py-0.5 rounded-lg border border-slate-700/50 flex items-center gap-1">
+          <i class="fa-solid fa-eye text-[9px]"></i> <span id="balance-text">Show Budget</span>
+        </button>
+      </div>
+      <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" alt="Profile" class="w-10 h-10 rounded-full border border-slate-700 object-cover">
+    </header>
+
+    <!-- ========================================== -->
+    <!-- 1. HOME SCREEN PAGE                        -->
+    <!-- ========================================== -->
+    <div id="home-page" class="page-section space-y-4">
+      
+      <!-- GEMINI SMART INSIGHTS -->
+      <div class="bg-[#111827] rounded-xl p-3.5 border border-slate-800">
+        <div class="flex items-center gap-1.5 mb-1 text-indigo-400 font-semibold text-[11px] uppercase tracking-wider">
+          <i class="fa-solid fa-robot"></i> <span>Gemini Advisor</span>
+        </div>
+        <p class="text-xs text-slate-300 leading-relaxed">"Welcome to your unified command center. All modules are fully loaded below. Enter logs to instantly back them up to your dashboard ledger."</p>
+      </div>
+
+      <!-- MAIN FEATURE MATRIX GRID (No Options Left Out) -->
+      <section class="space-y-3">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-slate-500 px-1">Financial & Lifestyle Modules</p>
+        
+        <div class="bg-[#111827] p-4 rounded-xl border border-slate-800 space-y-4 text-center">
+          <!-- Row 1: Core Essentials -->
+          <div class="grid grid-cols-4 gap-2">
+            <div onclick="triggerManualLog('Bazar')" class="flex flex-col items-center cursor-pointer group">
+              <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-200 group-hover:bg-indigo-600/20 transition"><i class="fa-solid fa-cart-shopping text-sm"></i></div>
+              <span class="text-[10px] text-slate-400 mt-1.5">Bazar</span>
+            </div>
+            <div onclick="triggerManualLog('Meals')" class="flex flex-col items-center cursor-pointer group">
+              <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-200 group-hover:bg-indigo-600/20 transition"><i class="fa-solid fa-bowl-food text-sm"></i></div>
+              <span class="text-[10px] text-slate-400 mt-1.5">Meals</span>
+            </div>
+            <div onclick="triggerManualLog('Borrow')" class="flex flex-col items-center cursor-pointer group">
+              <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-rose-400 group-hover:bg-rose-600/20 transition"><i class="fa-solid fa-arrow-down-left text-sm"></i></div>
+              <span class="text-[10px] text-slate-400 mt-1.5">Borrow</span>
+            </div>
+            <div onclick="triggerManualLog('Lend')" class="flex flex-col items-center cursor-pointer group">
+              <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-600/20 transition"><i class="fa-solid fa-arrow-up-right text-sm"></i></div>
+              <span class="text-[10px] text-slate-400 mt-1.5">Lend</span>
+            </div>
+          </div>
+
+          <!-- Row 2: Advanced Finance & Needs -->
+          <div class="grid grid-cols-4 gap-2 border-t border-slate-800/60 pt-3">
+            <div onclick="triggerManualLog('Credit/Due')" class="flex flex-col items-center cursor-pointer group">
+              <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-amber-400 group-hover:bg-indigo-600/20 transition"><i class="fa-solid fa-business-time text-sm"></i></div>
+              <span class="text-[10px] text-slate-400 mt-1.5">Credit/Due</span>
+            </div>
+            <div onclick="triggerManualLog('Loans')" class="flex flex-col items-center cursor-pointer group">
+              <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-cyan-400 group-hover:bg-indigo-600/20 transition"><i class="fa-solid fa-hand-holding-dollar text-sm"></i></div>
+              <span class="text-[10px] text-slate-400 mt-1.5">Loans</span>
+            </div>
+            <div onclick="triggerManualLog('Gifts')" class="flex flex-col items-center cursor-pointer group">
+              <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-pink-400 group-hover:bg-indigo-600/20 transition"><i class="fa-solid fa-gift text-sm"></i></div>
+              <span class="text-[10px] text-slate-400 mt-1.5">Gifts</span>
+            </div>
+            <div onclick="triggerManualLog('Utility Bills')" class="flex flex-col items-center cursor-pointer group">
+              <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-orange-400 group-hover:bg-indigo-600/20 transition"><i class="fa-solid fa-file-invoice-dollar text-sm"></i></div>
+              <span class="text-[10px] text-slate-400 mt-1.5">Bills</span>
+            </div>
+          </div>
+
+          <!-- Row 3: Lifestyle & Management -->
+          <div class="grid grid-cols-4 gap-2 border-t border-slate-800/60 pt-3">
+            <div onclick="triggerManualLog('Medical')" class="flex flex-col items-center cursor-pointer group">
+              <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-red-400 group-hover:bg-indigo-600/20 transition"><i class="fa-solid fa-heart-pulse text-sm"></i></div>
+              <span class="text-[10px] text-slate-400 mt-1.5">Medical</span>
+            </div>
+            <div onclick="alert('Studies Log Activated')" class="flex flex-col items-center cursor-pointer group">
+              <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-200 group-hover:bg-indigo-600/20 transition"><i class="fa-solid fa-book-open text-sm"></i></div>
+              <span class="text-[10px] text-slate-400 mt-1.5">Studies</span>
+            </div>
+            <div onclick="alert('Hustle/Business Tracking Panel Loaded')" class="flex flex-col items-center cursor-pointer group">
+              <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-purple-400 group-hover:bg-indigo-600/20 transition"><i class="fa-solid fa-briefcase text-sm"></i></div>
+              <span class="text-[10px] text-slate-400 mt-1.5">Hustle</span>
+            </div>
+            <div onclick="navigateTo('inbox')" class="flex flex-col items-center cursor-pointer group">
+              <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-blue-400 group-hover:bg-indigo-600/20 transition"><i class="fa-solid fa-list-check text-sm"></i></div>
+              <span class="text-[10px] text-slate-400 mt-1.5">Ledger</span>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- Gemini AI Assistant Module -->
-      <div class="bg-[#111827] rounded-xl p-4 border border-slate-800">
-        <div class="flex items-center gap-1.5 mb-1 text-indigo-400 font-semibold text-xs uppercase tracking-wider">
-          <i class="fa-solid fa-robot"></i> <span>Assistant Insights</span>
+      <!-- EXHAUSTIVE TRANSPORT & COMMUTE LOGS -->
+      <div class="bg-[#111827] rounded-xl p-4 border border-slate-800 space-y-3">
+        <p class="text-xs font-semibold text-slate-400 flex items-center gap-1"><i class="fa-solid fa-bus text-indigo-400"></i> One-Tap Dynamic Transport Logs:</p>
+        <div class="grid grid-cols-6 gap-1 text-center text-[10px]">
+          <div onclick="addLog('Rickshaw Fare', 20)" class="bg-slate-800/80 py-2 rounded-lg border border-slate-700/50 cursor-pointer text-slate-200 hover:border-indigo-500 transition">Rickshaw</div>
+          <div onclick="addLog('CNG Fare', 50)" class="bg-slate-800/80 py-2 rounded-lg border border-slate-700/50 cursor-pointer text-slate-200 hover:border-indigo-500 transition">CNG</div>
+          <div onclick="addLog('Bus Fare', 30)" class="bg-slate-800/80 py-2 rounded-lg border border-slate-700/50 cursor-pointer text-slate-200 hover:border-indigo-500 transition">Bus</div>
+          <div onclick="addLog('Train Fare', 80)" class="bg-slate-800/80 py-2 rounded-lg border border-slate-700/50 cursor-pointer text-slate-200 hover:border-indigo-500 transition">Train</div>
+          <div onclick="addLog('Toto Fare', 15)" class="bg-slate-800/80 py-2 rounded-lg border border-slate-700/50 cursor-pointer text-slate-200 hover:border-indigo-500 transition">Toto</div>
+          <div onclick="addLog('Bike Ride', 40)" class="bg-slate-800/80 py-2 rounded-lg border border-slate-700/50 cursor-pointer text-slate-200 hover:border-indigo-500 transition">Bike</div>
         </div>
-        <p class="text-xs text-slate-300 leading-relaxed">"Welcome back! Your fixed rent and internet logs are updated. Keep an eye on daily travel costs to maximize savings."</p>
       </div>
 
-      <!-- Quick Travel Ride Logger (One-Tap User-Friendly Setup) -->
+      <!-- CONTACTS & AGENTS HRAZONTAL MANAGEMENT -->
       <div class="bg-[#111827] rounded-xl p-4 border border-slate-800 space-y-3">
-        <p class="text-xs font-semibold text-slate-400">One-Tap Quick Log (Daily Rides):</p>
-        <div class="grid grid-cols-5 gap-2 text-center text-xs">
-          <div onclick="quickLogRide('Rickshaw', 20)" class="bg-slate-800/80 py-2 rounded-lg border border-slate-700/50 cursor-pointer text-slate-200 hover:border-indigo-500 transition">Rickshaw</div>
-          <div onclick="quickLogRide('CNG', 50)" class="bg-slate-800/80 py-2 rounded-lg border border-slate-700/50 cursor-pointer text-slate-200 hover:border-indigo-500 transition">CNG</div>
-          <div onclick="quickLogRide('Bus', 30)" class="bg-slate-800/80 py-2 rounded-lg border border-slate-700/50 cursor-pointer text-slate-200 hover:border-indigo-500 transition">Bus</div>
-          <div onclick="quickLogRide('Toto', 15)" class="bg-slate-800/80 py-2 rounded-lg border border-slate-700/50 cursor-pointer text-slate-200 hover:border-indigo-500 transition">Toto</div>
-          <div onclick="quickLogRide('Bike', 40)" class="bg-slate-800/80 py-2 rounded-lg border border-slate-700/50 cursor-pointer text-slate-200 hover:border-indigo-500 transition">Bike</div>
+        <div class="flex justify-between items-center">
+          <p class="text-xs font-semibold text-slate-400"><i class="fa-solid fa-address-book text-indigo-400 mr-0.5"></i> Saved Contacts & Agents:</p>
+          <button onclick="addNewContact()" class="text-[10px] bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 px-2 py-0.5 rounded-md hover:bg-indigo-600/40 transition">+ Add Contact</button>
+        </div>
+        <div id="contacts-shelf" class="flex gap-4 overflow-x-auto pb-1 text-center text-[10px] text-slate-300">
+          <div class="min-w-[50px]"><div class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center mx-auto text-white font-bold border border-slate-700">A</div><span class="block mt-1">Alvi</span></div>
+          <div class="min-w-[50px]"><div class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center mx-auto text-white font-bold border border-slate-700">R</div><span class="block mt-1">Rohan</span></div>
         </div>
       </div>
     </div>
 
-    <!-- =================================================== -->
-    <!-- 2. INBOX SCREEN SECTION (Inspired by bKash Split Tabs) -->
-    <!-- =================================================== -->
+    <!-- ========================================== -->
+    <!-- 2. INBOX PAGE (Statements & Alert Tabs)    -->
+    <!-- ========================================== -->
     <div id="inbox-page" class="page-section space-y-4">
       <h2 class="text-lg font-medium text-white px-1">Inbox Activity</h2>
-      
-      <!-- Split Tabs -->
       <div class="flex bg-[#111827] p-1 rounded-lg border border-slate-800 text-xs">
-        <button onclick="switchInboxTab('history')" id="tab-history-btn" class="flex-1 py-2 text-center rounded-md bg-slate-800 text-white font-medium transition">Transaction History</button>
-        <button onclick="switchInboxTab('alerts')" id="tab-alerts-btn" class="flex-1 py-2 text-center rounded-md text-slate-400 font-medium transition">System Alerts</button>
+        <button onclick="switchInboxTab('history')" id="tab-history-btn" class="flex-1 py-2 text-center rounded-md bg-slate-800 text-white font-medium">Statement Logs</button>
+        <button onclick="switchInboxTab('alerts')" id="tab-alerts-btn" class="flex-1 py-2 text-center rounded-md text-slate-400 font-medium">System Notifications</button>
       </div>
-
-      <!-- Tab Content 1: History Log List -->
-      <div id="inbox-history-content" class="space-y-2">
-        <div class="bg-[#111827] p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
-          <div>
-            <span class="font-medium text-slate-200 block">Quick Log: Rickshaw Ride</span>
-            <span class="text-slate-500">Auto Generated</span>
-          </div>
-          <span class="text-rose-400 font-semibold">- ৳20.00</span>
-        </div>
-      </div>
-
-      <!-- Tab Content 2: Alerts -->
+      <div id="inbox-history-content" class="space-y-2 max-h-[380px] overflow-y-auto pr-1"></div>
       <div id="inbox-alerts-content" class="hidden bg-[#111827] p-4 rounded-xl border border-slate-800 text-xs text-slate-400 text-center py-8">
-        <i class="fa-regular fa-bell-slash text-2xl text-slate-600 mb-2 block"></i>
-        No new system reminders or alerts at the moment.
+        <i class="fa-regular fa-bell-slash text-2xl text-slate-600 mb-2 block"></i> No system notifications or reminders.
       </div>
     </div>
 
-    <!-- =================================================== -->
+    <!-- ========================================== -->
+    <!-- 3. ANALYTICS PAGE (Metrics Tracking)       -->
+    <!-- ========================================== -->
+    <div id="analytics-page" class="page-section space-y-4">
+      <h2 class="text-lg font-medium text-white px-1">Metrics & Budgets</h2>
+      <div class="bg-[#111827] p-4 rounded-xl border border-slate-800 space-y-4 text-xs">
+        <div>
+          <div class="flex justify-between text-slate-400 mb-1"><span>Ecosystem Flow Usage</span><span>Active</span></div>
+          <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden"><div class="bg-indigo-600 h-full w-[45%]"></div></div>
+        </div>
+        <div class="grid grid-cols-2 gap-3 text-center">
+          <div class="bg-slate-800/40 p-3 rounded-lg border border-slate-700/50">
+            <span class="text-slate-400 block mb-0.5">Total Outflow Logs</span>
+            <span id="metrics-outflow" class="text-base font-bold text-white">৳0.00</span>
+          </div>
+          <div class="bg-slate-800/40 p-3 rounded-lg border border-slate-700/50">
+            <span class="text-slate-400 block mb-0.5">Ecosystem Health</span>
+            <span class="text-base font-bold text-emerald-400">100/100 Optimal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 4. SETTINGS & PROFILE PAGE (KYC Inside)    -->
+    <!-- ========================================== -->
+    <div id="profile-page" class="page-section space-y-4">
+      <!-- KYC Integrated Profile Fields -->
+      <div class="bg-[#111827] p-4 rounded-xl border border-slate-800 space-y-3">
+        <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+          <i class="fa-solid fa-address-card text-indigo-400 text-base"></i>
+          <div>
+            <h3 class="text-xs font-bold text-white uppercase tracking-wider">KYC Profile Management</h3>
+            <p class="text-[10px] text-slate-400">Personal & Educational Records</p>
+          </div>
+        </div>
+        
+        <div class="space-y-2.5 text-xs">
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="text-slate-400 block mb-1">Birth Year</label>
+              <input type="number" id="kyc-birth" placeholder="2005" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white focus:outline-none focus:border-indigo-500">
+            </div>
+            <div>
+              <label class="text-slate-400 block mb-1">Mobile Number</label>
+              <input type="text" id="kyc-phone" placeholder="+88019..." class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white focus:outline-none focus:border-indigo-500">
+            </div>
+          </div>
+          <div>
+            <label class="text-slate-400 block mb-1">Institute / University / College Name</label>
+            <input type="text" id="kyc-inst" value="BSPI • Computer Science & Technology" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white focus:outline-none focus:border-indigo-500">
+          </div>
+          <div>
+            <label class="text-slate-400 block mb-1">Biodata / Custom Status</label>
+            <input type="text" id="kyc-bio" value="Ecosystem Administrator" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white focus:outline-none focus:border-indigo-500">
+          </div>
+          <button onclick="saveFullKyc()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg font-medium transition text-xs mt-1">Synchronize Profile Modifications</button>
+        </div>
+      </div>
+
+      <!-- Theme Controls -->
+      <div class="bg-[#111827] p-4 rounded-xl border border-slate-800 space-y-3">
+        <h3 class="text-xs font-semibold text-indigo-400 uppercase tracking-wider">Dynamic Theme Prefs</h3>
+        <div class="grid grid-cols-3 gap-2 text-xs">
+          <button onclick="setTheme('dark')" class="bg-slate-800 border border-slate-700 text-white py-2 rounded-lg">Dark Navy</button>
+          <button onclick="setTheme('slate')" class="bg-slate-700 border border-slate-600 text-white py-2 rounded-lg">Slate Gray</button>
+          <button onclick="setTheme('light')" class="bg-slate-200 border border-slate-300 text-slate-800 py-2 rounded-lg font-semibold">Classic Light</button>
+        </div>
+      </div>
+
+      <!-- Security Controls -->
+      <div class="bg-[#111827] p-4 rounded-xl border border-slate-800 space-y-2.5 text-xs">
+        <h3 class="text-xs font-semibold text-indigo-400 uppercase tracking-wider">Privacy & Locks</h3>
+        <div class="flex justify-between items-center"><span>Secure App Access PIN</span><input type="checkbox" checked class="w-4 h-4 accent-indigo-600"></div>
+        <div class="flex justify-between items-center"><span>Biometric Fingerprint / Face ID Unlock</span><input type="checkbox" class="w-4 h-4 accent-indigo-600"></div>
+      </div>
+
+      <!-- DEVELOPER CONTACT WIDGET -->
+      <div class="bg-indigo-950/20 rounded-xl p-4 border border-indigo-500/20 text-center space-y-3">
+        <p class="text-[11px] text-slate-400">Ecosystem Developer Connection Handles:</p>
+        <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+          <a href="https://wa.me/8801947523785" target="_blank" class="flex items-center justify-center gap-1.5 bg-emerald-600/10 border border-emerald-500/20 text-emerald-400 py-2 rounded-lg"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+          <a href="https://instagram.com/_ur_adeel" target="_blank" class="flex items-center justify-center gap-1.5 bg-pink-600/10 border border-pink-500/20 text-pink-400 py-2 rounded-lg"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATA INPUT EXPANSION INTERACTIVE DIALOGUE -->
+    <div id="log-modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+      <div class="bg-[#111827] border border-slate-800 w-full max-w-xs rounded-xl p-4 space-y-3 text-xs">
+        <h3 id="modal-title" class="text-sm font-semibold text-white">Log Parameter Entry</h3>
+        <div>
+          <label class="text-slate-400 block mb-1">Enter Transaction Amount (৳)</label>
+          <input type="number" id="modal-amount" placeholder="150" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white focus:outline-none">
+        </div>
+        <div class="flex gap-2 pt-1">
+          <button onclick="closeLogModal()" class="flex-1 bg-slate-800 py-2 rounded-lg text-slate-300 border border-slate-700">Cancel</button>
+          <button onclick="submitManualLog()" class="flex-1 bg-indigo-600 py-2 rounded-lg text-white font-medium">Save Log</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- FIXED BOTTOM GLOBAL NAVIGATION             -->
+    <!-- ========================================== -->
+    <nav id="app-nav" class="hidden fixed bottom-4 left-4 right-4 max-w-md mx-auto bg-[#111827] rounded-xl p-3 flex justify-around items-center border border-slate-800 z-50 shadow-xl">
+      <button onclick="navigateTo('home')" id="nav-home" class="text-indigo-400 flex flex-col items-center gap-1 text-[11px] font-medium w-12"><i class="fa-solid fa-house"></i>Home</button>
+      <button onclick="navigateTo('inbox')" id="nav-inbox" class="text-slate-500 flex flex-col items-center gap-1 text-[11px] font-medium w-12"><i class="fa-solid fa-inbox"></i>Inbox</button>
+      <button onclick="alert('Camera Scan Module Active')" class="bg-indigo-600 text-white w-10 h-10 rounded-full flex items-center justify-center -mt-5 border-4 border-[#0b0f19] shadow-lg"><i class="fa-solid fa-camera"></i></button>
+      <button onclick="navigateTo('analytics')" id="nav-analytics" class="text-slate-500 flex flex-col items-center gap-1 text-[11px] font-medium w-12"><i class="fa-solid fa-chart-pie"></i>Metrics</button>
+      <button onclick="navigateTo('profile')" id="nav-profile" class="text-slate-500 flex flex-col items-center gap-1 text-[11px] font-medium w-12"><i class="fa-solid fa-user-gear"></i>Settings</button>
+    </nav>
+
+  </div>
+
+  <!-- CORE LOGIC AND DATA RETENTION SYSTEM -->
+  <script>
+    let activeUser = localStorage.getItem('active_user') || null;
+    let logs = JSON.parse(localStorage.getItem('student_logs')) || [];
+    let currentLogCategory = '';
+    let isHidden = true;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      if(activeUser) initializeAppDashboard(activeUser);
+      setTheme(localStorage.getItem('app_theme') || 'dark');
+    });
+
+    function handleAuth(e) {
+      e.preventDefault();
+      const name = document.getElementById('auth-name').value || "Mohshin Adeel";
+      localStorage.setItem('active_user', name);
+      initializeAppDashboard(name);
+    }
+
+    function mockLogin(source) {
+      localStorage.setItem('active_user', "Mohshin Adeel (" + source + ")");
+      initializeAppDashboard("Mohshin Adeel");
+    }
+
+    function initializeAppDashboard(username) {
+      document.getElementById('auth-page').classList.remove('active');
+      document.getElementById('app-header').classList.remove('hidden');
+      document.getElementById('app-nav').classList.remove('hidden');
+      document.getElementById('header-user-name').innerText = username;
+      navigateTo('home');
+      renderLogs();
+      loadKycData();
+    }
+
+    function navigateTo(pageId) {
+      document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+      const page = document.getElementById(`${pageId}-page`);
+      if(page) page.classList.add('active');
+      ['home', 'inbox', 'analytics', 'profile'].forEach(id => {
+        const btn = document.getElementById(`nav-${id}`);
+        if(btn) btn.className = id === pageId ? "text-indigo-400 flex flex-col items-center gap-1 text-[11px] font-medium w-12" : "text-slate-500 flex flex-col items-center gap-1 text-[11px] font-medium w-12";
+      });
+    }
+
+    function toggleBalance() {
+      document.getElementById('balance-text').innerText = isHidden ? "৳ 4,520.00 Left" : "Show Budget";
+      isHidden = !isHidden;
+    }
+
+    function triggerManualLog(category) {
+      currentLogCategory = category;
+      document.getElementById('modal-title').innerText = "Log entry for: " + category;
+      document.getElementById('modal-amount').value = '';
+      document.getElementById('log-modal').classList.remove('hidden');
+    }
+
+    function closeLogModal() { document.getElementById('log-modal').classList.add('hidden'); }
+
+    function submitManualLog() {
+      const val = parseFloat(document.getElementById('modal-amount').value) || 0;
+      if(val > 0) {
+        addLog(currentLogCategory, val);
+        closeLogModal();
+      }
+    }
+
+    function addLog(title, amount) {
+      const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      logs.unshift({ title, amount, time });
+      localStorage.setItem('student_logs', JSON.stringify(logs));
+      renderLogs();
+    }
+
+    function renderLogs() {
+      const container = document.getElementById('inbox-history-content');
+      if(!container) return;
+      container.innerHTML = logs.length ? '' : '<div class="text-center text-slate-500 py-6">No statement logs recorded.</div>';
+      let sum = 0;
+      logs.forEach(log => {
+        sum += log.amount;
+        container.innerHTML += `<div class="bg-[#111827] p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs"><div><span class="font-medium text-slate-200 block">${log.title} Entry</span><span class="text-slate-500">${log.time}</span></div><span class="text-rose-400 font-semibold">- ৳${log.amount.toFixed(2)}</span></div>`;
+      });
+      document.getElementById('metrics-outflow').innerText = `৳${sum.toFixed(2)}`;
+    }
+
+    function switchInboxTab(tab) {
+      const histBtn = document.getElementById('tab-history-btn');
+      const alrtBtn = document.getElementById('tab-alerts-btn');
+      const histContent = document.getElementById('inbox-history-content');
+      const alrtContent = document.getElementById('inbox-alerts-content');
+      if(tab === 'history') {
+        histBtn.className = "flex-1 py-2 text-center rounded-md bg-slate-800 text-white font-medium";
+        alrtBtn.className = "flex-1 py-2 text-center rounded-md text-slate-400 font-medium";
+        histContent.classList.remove('hidden'); alrtContent.classList.add('hidden');
+      } else {
+        alrtBtn.className = "flex-1 py-2 text-center rounded-md bg-slate-800 text-white font-medium";
+        histBtn.className = "flex-1 py-2 text-center rounded-md text-slate-400 font-medium";
+        alrtContent.classList.remove('hidden'); histContent.classList.add('hidden');
+      }
+    }
+
+    function addNewContact() {
+      const name = prompt("Enter contact name:");
+      if(name) {
+        const shelf = document.getElementById('contacts-shelf');
+        const letter = name.charAt(0).toUpperCase();
+        shelf.innerHTML += `<div class="min-w-[50px]"><div class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center mx-auto text-white font-bold border border-slate-700">${letter}</div><span class="block mt-1">${name}</span></div>`;
+      }
+    }
+
+    function saveFullKyc() {
+      localStorage.setItem('kyc_birth', document.getElementById('kyc-birth').value);
+      localStorage.setItem('kyc_phone', document.getElementById('kyc-phone').value);
+      localStorage.setItem('kyc_inst', document.getElementById('kyc-inst').value);
+      localStorage.setItem('kyc_bio', document.getElementById('kyc-bio').value);
+      alert('KYC Profile Records Synchronized Globally!');
+    }
+
+    function loadKycData() {
+      if(localStorage.getItem('kyc_birth')) document.getElementById('kyc-birth').value = localStorage.getItem('kyc_birth');
+      if(localStorage.getItem('kyc_phone')) document.getElementById('kyc-phone').value = localStorage.getItem('kyc_phone');
+      if(localStorage.getItem('kyc_inst')) document.getElementById('kyc-inst').value = localStorage.getItem('kyc_inst');
+      if(localStorage.getItem('kyc_bio')) document.getElementById('kyc-bio').value = localStorage.getItem('kyc_bio');
+    }
+
+    function setTheme(theme) {
+      const body = document.getElementById('app-body');
+      localStorage.setItem('app_theme', theme);
+      if(theme === 'light') {
+        body.className = "bg-slate-50 text-slate-800 min-h-screen font-sans antialiased transition-colors duration-200";
+      } else if (theme === 'slate') {
+        body.className = "bg-slate-900 text-slate-100 min-h-screen font-sans antialiased transition-colors duration-200";
+      } else {
+        body.className = "bg-[#0b0f19] text-slate-300 min-h-screen font-sans antialiased transition-colors duration-200";
+      }
+    }
+  </script>
+</body>
+</html>
     <!-- 3. PROFILE & SETTINGS SECTION (Includes KYC & Security)-->
     <!-- =================================================== -->
     <div id="profile-page" class="page-section space-y-4">
